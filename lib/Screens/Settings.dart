@@ -1,6 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:meup_wallet/SettingsDetail/Genel.dart';
+import 'package:meup_wallet/SettingsDetail/g%C3%BCvenlikvegizlilik.dart';
+
+import '../SettingsDetail/Aglar.dart';
+import '../SettingsDetail/Hakkinda.dart';
+import '../SettingsDetail/Satınal.dart';
+import '../SettingsDetail/gelismis.dart';
+import '../SettingsDetail/kisiler.dart';
 
 class Settings extends StatefulWidget {
   const Settings({Key? key});
@@ -85,9 +92,29 @@ class _SettingsState extends State<Settings> {
                     builder: (context) => Genel()));
               }
               else if (index == 1) {
-                // İkinci liste öğesine tıklandığında yapılacak işlem
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => Guvenlik()));
               }
-              // ve benzer şekilde diğer liste öğeleri için işlemleri ekleyebilirsiniz.
+              else if (index==2){
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => Gelismis()));
+              }
+              else if(index==3){
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => Kisiler()));
+              }
+              else if(index==4){
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => Aglar()));
+              }
+              else if(index==5){
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => Satinal()));
+              }
+              else if(index==6){
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => Hakkinda()));
+              }
             },
             child: ListTile(
               title:Text(
