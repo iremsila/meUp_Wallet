@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:meup_wallet/Screens/ChooseNetwork.dart';
 
 
 class Home extends StatelessWidget {
@@ -41,18 +42,30 @@ class _MyHomePageState extends State<MyHomePage> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   ListTile(
-                    title: TextButton(onPressed: (){
-                      updateAppbar('Ağ 1');
-                    } ,child: Text('Ağ 1',
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),)),
+                    title: TextButton(
+                      onPressed: () {
+                        updateAppbar('Ağ 1');
+                      },
+                      child: Text(
+                        'Ağ 1',
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
                   ),
                   ListTile(
-                    title: TextButton(onPressed: (){updateAppbar('Ağ 2');} ,child: Text('Ağ 2',
-                      style: TextStyle(
-                        color: Colors.black
-                      ),)),
+                    title: TextButton(
+                      onPressed: () {
+                        updateAppbar('Ağ 2');
+                      },
+                      child: Text(
+                        'Ağ 2',
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
                   ),
                   ListTile(
                     title: Row(
@@ -75,16 +88,47 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   if (showAdditionalOptions)
                     ListTile(
-                      title: TextButton(onPressed: (){updateAppbar('Ağ 3');} ,child: Text('Ağ 3',style: TextStyle(
-                        color: Colors.black
-                      ),)),
+                      title: TextButton(
+                        onPressed: () {
+                          updateAppbar('Ağ 3');
+                        },
+                        child: Text(
+                          'Ağ 3',
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
                     ),
                   if (showAdditionalOptions)
                     ListTile(
-                      title: TextButton(onPressed: (){updateAppbar('Ağ 4');} ,child: Text('Ağ 4',style: TextStyle(
-                        color: Colors.black
-                      ),)),
+                      title: TextButton(
+                        onPressed: () {
+                          updateAppbar('Ağ 4');
+                        },
+                        child: Text(
+                          'Ağ 4',
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
                     ),
+                  ListTile( // Yeni eklenen ListTile
+                    title: TextButton(
+                      onPressed: () {
+                        // "AĞ Ekle" butonuna tıklandığında yapılacak işlemler
+                        // Örneğin, yeni bir sayfa açılabilir
+                        _openNewPage();
+                      },
+                      child: Text(
+                        'AĞ Ekle',
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             );
@@ -96,6 +140,12 @@ class _MyHomePageState extends State<MyHomePage> {
       _bottomSheetController = null;
     }
   }
+
+  void _openNewPage() {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => chooseNetwork()));
+  }
+
   String selectedAccount='Account 1';
 
   int selectedIndex = 0;
