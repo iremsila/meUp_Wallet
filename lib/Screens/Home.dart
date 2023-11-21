@@ -97,7 +97,28 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
   String selectedAccount='Account 1';
-  int selectedIndex=0;
+
+  int selectedIndex = 0;
+  int subIndex = 0;
+
+  final Map<int, Widget> mainSegments = {
+    0: Text('NFTler'),
+    1: Text('Tokenlar'),
+  };
+
+  final Map<int, List<Widget>> subSegments = {
+    0: [
+      Text('NFT 1'),
+      Text('NFT 2'),
+      Text('NFT 3'),
+    ],
+    1: [
+      Text('Token 1'),
+      Text('Token 2'),
+      Text('Token 3'),
+    ],
+  };
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -178,17 +199,41 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                   ),
-                  CupertinoSlidingSegmentedControl<int>(
+                  CupertinoSegmentedControl<int>(
                     groupValue: selectedIndex,
-                    children: {
-                      0: Text('NFTler'),
-                      1: Text('Tokenlar'),
-                    },
+                    children: mainSegments,
                     onValueChanged: (value) {
                       setState(() {
                         selectedIndex = value!;
+                        subIndex = 0; // Ana seçenek değiştiğinde alt seçenekleri sıfırla.
                       });
                     },
+                  ),
+                  SizedBox(height: 20),
+                  Column(
+                    children: subSegments[selectedIndex]!.map((subSegment) {
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            subIndex = subSegments[selectedIndex]!.indexOf(subSegment);
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            Radio<int>(
+                              value: subSegments[selectedIndex]!.indexOf(subSegment),
+                              groupValue: subIndex,
+                              onChanged: (value) {
+                                setState(() {
+                                  subIndex = value!;
+                                });
+                              },
+                            ),
+                            subSegment,
+                          ],
+                        ),
+                      );
+                    }).toList(),
                   ),
                 ],
               ),
