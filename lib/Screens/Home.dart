@@ -7,6 +7,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: MyHomePage(),
     );
   }
@@ -152,22 +153,25 @@ class _MyHomePageState extends State<MyHomePage> {
   int subIndex = 0;
 
   final Map<int, Widget> mainSegments = {
-    0: Text('NFTler'),
-    1: Text('Tokenlar'),
+    0: Text('  NFTler  '),
+    1: Text('  Tokenlar  '),
   };
 
-  final Map<int, List<Widget>> subSegments = {
-    0: [
-      Text('NFT 1'),
-      Text('NFT 2'),
-      Text('NFT 3'),
-    ],
-    1: [
-      Text('Token 1'),
-      Text('Token 2'),
-      Text('Token 3'),
-    ],
-  };
+
+
+  Widget buildSelectedWidget() {
+    switch (selectedIndex) {
+      case 0:
+        return NFTWidget();
+      case 1:
+        return TokenWidget();
+      default:
+        return Container(); // Varsayılan durum için boş bir container
+    }
+  }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -229,8 +233,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                           ),
                           SizedBox(height: 12),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 25.0),
                             child: Row(
                               children: [
                                 Align(
@@ -249,46 +253,240 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                   ),
-                  CupertinoSegmentedControl<int>(
-                    groupValue: selectedIndex,
-                    children: mainSegments,
-                    onValueChanged: (value) {
-                      setState(() {
-                        selectedIndex = value!;
-                        subIndex = 0; // Ana seçenek değiştiğinde alt seçenekleri sıfırla.
-                      });
-                    },
+                  Container(
+                    height: 60, // Container'ın yüksekliği
+                    width: double.infinity, // Container'ı genişliği, ekrana yaymak için 'double.infinity' kullanılır
+                    padding: EdgeInsets.all(10),
+                    child: CupertinoSegmentedControl<int>(
+                      groupValue: selectedIndex,
+                      children: mainSegments,
+                      onValueChanged: (value) {
+                        setState(() {
+                          selectedIndex = value!;
+                          subIndex = 0; // Ana seçenek değiştiğinde alt seçenekleri sıfırla.
+                        });
+                      },
+                      borderColor: Colors.grey.shade800,
+                      selectedColor: Colors.grey.shade800,
+                      pressedColor: Colors.grey.shade700,
+                      unselectedColor: Colors.white,
+                    ),
                   ),
                   SizedBox(height: 20),
-                  Column(
-                    children: subSegments[selectedIndex]!.map((subSegment) {
-                      return GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            subIndex = subSegments[selectedIndex]!.indexOf(subSegment);
-                          });
-                        },
-                        child: Row(
-                          children: [
-                            Radio<int>(
-                              value: subSegments[selectedIndex]!.indexOf(subSegment),
-                              groupValue: subIndex,
-                              onChanged: (value) {
-                                setState(() {
-                                  subIndex = value!;
-                                });
-                              },
-                            ),
-                            subSegment,
-                          ],
-                        ),
-                      );
-                    }).toList(),
-                  ),
+                  buildSelectedWidget(),
                 ],
               ),
-
       ),
     );
   }
 }
+
+class NFTWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(horizontal: 22),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  ' 0 TL',
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  // Portföy butonuna tıklandığında yapılacak işlemler
+                  // Navigator.push(context, MaterialPageRoute(builder: (context) => PortfolioPage()));
+                },
+                child: Container(
+                  padding: EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                    color: Colors.blue.shade700,
+                    borderRadius: BorderRadius.circular(7),
+                  ),
+                  child: Text(
+                    'Portföy ! ',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 30),
+          Row(
+            children: [
+              Icon(Icons.check_circle, color: Colors.green),
+              SizedBox(width: 12),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Ethereum",
+                    style: TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  Text(
+                    "0 ETH",
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
+              ),
+              Spacer(),
+              Text(
+                "0.0 TL",
+                style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 16),
+          Center(
+            child: Text(
+              "Başlamak için kripto ekleyin",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          SizedBox(height: 16),
+          Row(
+            children: [
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () {
+                    // "ETH Satın Alın" butonuna tıklandığında yapılacak işlemler
+                    // Navigator.push(context, MaterialPageRoute(builder: (context) => BuyEthPage()));
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                  ),
+                  child: Center(
+                      child: Text("ETH Satın Alın")),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Text(
+                  "Tokeninizi görmüyorsanız",
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: TextButton(
+                  onPressed: () {
+                    // "Tokenleri İçe Aktar" butonuna tıklandığında yapılacak işlemler
+                    // Navigator.push(context, MaterialPageRoute(builder: (context) => ImportTokensPage()));
+                  },
+                  style: TextButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                  ),
+                  child: Text(
+                    "Tokenleri İçe Aktar",
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.blue.shade700,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+}
+
+class TokenWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(
+                Icons.info,
+                color: Colors.blue,
+                size: 24,
+              ),
+              SizedBox(width: 8),
+              Text(
+                "NFT Otomatik Algılama",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 12),
+          Text(
+            "MetaMask’ın OpenSea’dan NFT’leri otomatik olarak algılayıp MetaMask cüzdanında göstermesine izin verin.",
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.grey.shade700,
+            ),
+          ),
+          SizedBox(height: 16),
+          TextButton(
+            onPressed: () {
+              // Ayarlar kısmında NFT’leri otomatik algıla seçeneğini açın
+            },
+            child: Text(
+              "Ayarlar kısmında NFT’leri otomatik algıla seçeneğini açın",
+              style: TextStyle(
+                color: Colors.blue,
+                fontSize: 16,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+

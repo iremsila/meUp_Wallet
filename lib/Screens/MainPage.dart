@@ -5,7 +5,7 @@ import 'package:meup_wallet/Screens/Settings.dart';
 import 'package:meup_wallet/Screens/Wallet.dart';
 
 import 'Home.dart';
-import 'Search.dart';
+import 'gonderalbutton.dart';
 
 
 
@@ -47,16 +47,70 @@ class _MainPageState extends State<MainPage> {
               });
             },
             padding: EdgeInsets.all(16),
-            tabs: const [
-              GButton(icon: Icons.home, text: 'Ana Sayfa'),
-              GButton(icon: Icons.person, text: 'Profil'),
-              GButton(icon: Icons.search, text: 'Arama'),
-              GButton(icon: Icons.wallet, text: 'Cüzdan'),
-              GButton(icon: Icons.settings, text: 'Ayarlar'),
+            tabs:  [
+              GButton(icon: Icons.wallet),
+              GButton(icon: Icons.access_time),
+              GButton(icon: Icons.arrow_circle_up_outlined,
+              onPressed: (){
+                _showSearchOptions(context);
+              },
+              ),
+              GButton(icon: Icons.compass_calibration),
+              GButton(icon: Icons.settings),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  void _showSearchOptions(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext builder) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              title: TextButton(
+                onPressed: () {
+                  // Para gönderme işlemleri
+                  Navigator.pop(context);
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.arrow_circle_up_outlined, color: Colors.black), // Gönderme ikonu
+                    SizedBox(width: 8), // İkon ile metin arasında boşluk
+                    Text(
+                      'Para Gönder',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            ListTile(
+              title: TextButton(
+                onPressed: () {
+                  // Para gönderme işlemleri
+                  Navigator.pop(context);
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.arrow_circle_down_outlined, color: Colors.black), // Gönderme ikonu
+                    SizedBox(width: 8), // İkon ile metin arasında boşluk
+                    Text(
+                      'Para Al',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

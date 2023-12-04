@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import '../Screens/MainPage.dart';
 
-void main() {
-  runApp(SplashScreen());
-}
 
 class SplashScreen extends StatefulWidget {
   @override

@@ -45,43 +45,45 @@ class _chooseNetworkState extends State<chooseNetwork> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Center(
-            child: CupertinoSlidingSegmentedControl<int>(
-              groupValue: _currentIndex,
-              children: _segments,
-              onValueChanged: (value) {
-                setState(() {
-                  _currentIndex = value!;
-                });
-              },
-            ),
-          ),
-          // İçeriğinizi buraya ekleyin
-          _currentIndex == 0
-              ? _buildPopulerContent()
-              : _buildOzelAglarContent(),
-          SizedBox(height: 16), // Ekle butonu ile arasına bir boşluk ekleyebilirsiniz
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.grey.shade400,
-                width: 1,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Center(
+              child: CupertinoSlidingSegmentedControl<int>(
+                groupValue: _currentIndex,
+                children: _segments,
+                onValueChanged: (value) {
+                  setState(() {
+                    _currentIndex = value!;
+                  });
+                },
               ),
-              borderRadius: BorderRadius.circular(5),
             ),
-            child: TextButton(
-              onPressed: () {},
-              child: Text("Ekle",style: TextStyle(
-                color: Colors.black,
-                fontSize: 18,
-                fontWeight: FontWeight.bold
-              ),),
+            // İçeriğinizi buraya ekleyin
+            _currentIndex == 0
+                ? _buildPopulerContent()
+                : _buildOzelAglarContent(),
+            SizedBox(height: 16), // Ekle butonu ile arasına bir boşluk ekleyebilirsiniz
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.grey.shade400,
+                  width: 1,
+                ),
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: TextButton(
+                onPressed: () {},
+                child: Text("Ekle",style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold
+                ),),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
